@@ -11,7 +11,7 @@ namespace flexington.WFC
         [Header("Grid")]
         [SerializeField] private Vector2Int _size;
 
-        [SerializeField] private List<TileOption> _options;
+        [SerializeField] private List<TileOptionObject> _options;
 
         private Cell[] _grid;
 
@@ -27,20 +27,12 @@ namespace flexington.WFC
                 Cell cell = SelectNextCandidate(_grid);
                 cell = Collapse(cell);
                 _grid = ReduceNeighbours(_grid, cell.Position);
-                Debug.Log($"Collapsed cell at {cell.Position} with direction {cell.Direction}");
                 i++;
             }
             Debug.Log($"Collapsed {_grid.Count(c => c.IsCollapsed)} cells in {i} iterations");
 
             // Draw collapsed cells
             DrawCollapsedCells(_grid, _options);
-        }
-
-        private void DebugCollapse()
-        {
-            // Set first cell to collapsed
-            _grid[0].IsCollapsed = true;
-            _grid[0].Direction = Directions.Up;
         }
 
         /// <summary>
@@ -60,7 +52,7 @@ namespace flexington.WFC
                 {
                     Position = new Vector2Int(i % size.x, i / size.x),
                     IsCollapsed = false,
-                    Direction = Directions.Blank | Directions.Up | Directions.Down | Directions.Left | Directions.Right
+                    Options = new List<TileOptionObject>(_options)
                 };
             }
 
@@ -76,13 +68,13 @@ namespace flexington.WFC
         {
             // Get all cells that are not collapsed
             grid = grid.Where(c => !c.IsCollapsed)
-                .OrderBy(c => CountDirections(c.Direction)).ToArray();
+                .OrderBy(c => c.Options.Count).ToArray();
 
             // Get first cell
             var cell = grid.First();
 
             // Get all cells with the  same amount of options
-            var sameOptions = grid.Where(c => CountDirections(c.Direction) == CountDirections(cell.Direction)).ToArray();
+            var sameOptions = grid.Where(c => c.Options.Count == cell.Options.Count).ToArray();
 
             // Get random cell from same options
             cell = sameOptions[UnityEngine.Random.Range(0, sameOptions.Length)];
@@ -101,22 +93,19 @@ namespace flexington.WFC
             if (cell.IsCollapsed) return cell;
 
             // If cell has only one direction remaining, collapse it
-            if (CountDirections(cell.Direction) == 1)
+            if (cell.Options.Count == 1)
             {
+                cell.Option = cell.Options[0];
+                cell.Options = null;
                 cell.IsCollapsed = true;
                 return cell;
             }
 
-            // Get all selected falgs
-            var options = new BitArray(new[] { (int)cell.Direction }).Cast<bool>().ToArray();
+            // Select randomly from remaining options
+            cell.Option = cell.Options[UnityEngine.Random.Range(0, cell.Options.Count)];
 
-            // Get index of elements that are true
-            var optionsIndices = options.Select((b, i) => b ? i : -1).Where(i => i != -1).ToArray();
-
-            var randomFlag = optionsIndices[UnityEngine.Random.Range(0, optionsIndices.Length)];
-
-            // Set direction
-            cell.Direction = (Directions)(1 << randomFlag);
+            // Set options null
+            cell.Options = null;
 
             // Collapse cell
             cell.IsCollapsed = true;
@@ -159,7 +148,7 @@ namespace flexington.WFC
         /// </summary>
         /// <param name="grid">The grid to draw.</param>
         /// <param name="options">The available options.</param>
-        private void DrawCollapsedCells(Cell[] grid, List<TileOption> options)
+        private void DrawCollapsedCells(Cell[] grid, List<TileOptionObject> options)
         {
             for (int x = 0; x < _size.x; x++)
             {
@@ -168,7 +157,7 @@ namespace flexington.WFC
                     var cell = grid[x + y * _size.x];
                     if (cell.IsCollapsed)
                     {
-                        var tile = options.First(o => o.Direction == cell.Direction).Tile;
+                        var tile = cell.Option.Tile;
                         var tileObject = Instantiate(tile, new Vector3(x, y, 0), Quaternion.identity);
                         tileObject.transform.parent = transform;
                     }
@@ -187,42 +176,46 @@ namespace flexington.WFC
             // Get cell
             var cell = grid[cellPosition.x + cellPosition.y * _size.x];
 
-            // Get valid neighbours
-            var validNeighbours = _options.Single(o => o.Direction == cell.Direction);
+            ReduceOptions(grid, cell, Vector2Int.up);
+            ReduceOptions(grid, cell, Vector2Int.right);
+            ReduceOptions(grid, cell, Vector2Int.down);
+            ReduceOptions(grid, cell, Vector2Int.left);
 
-            // Top Neighbour
-            var topNeighbourPosition = cellPosition + Vector2Int.up;
-            if (topNeighbourPosition.y < _size.y)
-            {
-                var topNeighbour = grid[topNeighbourPosition.x + topNeighbourPosition.y * _size.x];
-                if (!topNeighbour.IsCollapsed)
-                {
-                    topNeighbour.Direction &= ~GetInvalidDirections(validNeighbours.ValidNeighboursTop);
-                }
-            }
+            return grid;
+        }
 
-            // Right Neighbour
-            var rightNeighbourPosition = cellPosition + Vector2Int.right;
-            if (rightNeighbourPosition.x < _size.x)
-            {
-                var rightNeighbour = grid[rightNeighbourPosition.x + rightNeighbourPosition.y * _size.x];
-                if (!rightNeighbour.IsCollapsed) rightNeighbour.Direction &= ~GetInvalidDirections(validNeighbours.ValidNeighboursRight);
-            }
+        /// <summary>
+        /// Reduces the options of a given position in the grid.
+        /// </summary>
+        /// <param name="grid">The grid to reduce.</param>
+        /// <param name="position">The position to reduce.</param>
+        /// <returns>The updated grid.</returns>
+        private Cell[] ReduceOptions(Cell[] grid, Cell cell, Vector2Int offset)
+        {
+            // Check if position is within the grid
+            var position = cell.Position + offset;
+            if (position.x < 0 || position.x >= _size.x || position.y < 0 || position.y >= _size.y) return grid;
 
-            // Bottom Neighbour
-            var bottomNeighbourPosition = cellPosition + Vector2Int.down;
-            if (bottomNeighbourPosition.y >= 0)
-            {
-                var bottomNeighbour = grid[bottomNeighbourPosition.x + bottomNeighbourPosition.y * _size.x];
-                if (!bottomNeighbour.IsCollapsed) bottomNeighbour.Direction &= ~GetInvalidDirections(validNeighbours.ValidNeighboursBottom);
-            }
+            // Get neighbour
+            var neighbour = grid[position.x + position.y * _size.x];
 
-            // Left Neighbour
-            var leftNeighbourPosition = cellPosition + Vector2Int.left;
-            if (leftNeighbourPosition.x >= 0)
+            // Check if neighbour is already collapsed
+            if (neighbour.IsCollapsed) return grid;
+
+            // Get direction
+            var direction = offset.x == 0 ? (offset.y == 1 ? Directions.Up : Directions.Down) : (offset.x == 1 ? Directions.Right : Directions.Left);
+
+            // Remove all options of the neighbour where the given direction has not the same connection type
+            var connection = cell.Option.Connection.Single(c => c.Directions == direction);
+
+            // Get opposite direction
+            var oppositeDirection = offset.x == 0 ? (offset.y == 1 ? Directions.Down : Directions.Up) : (offset.x == 1 ? Directions.Left : Directions.Right);
+
+            for (int i = neighbour.Options.Count - 1; i >= 0; i--)
             {
-                var leftNeighbour = grid[leftNeighbourPosition.x + leftNeighbourPosition.y * _size.x];
-                if (!leftNeighbour.IsCollapsed) leftNeighbour.Direction &= ~GetInvalidDirections(validNeighbours.ValidNeighboursLeft);
+                var option = neighbour.Options[i];
+                var connections = option.Connection.Any(c => c.Directions == oppositeDirection && c.ConnectionType == connection.ConnectionType);
+                if (!connections) neighbour.Options.RemoveAt(i);
             }
 
             return grid;
@@ -256,7 +249,7 @@ namespace flexington.WFC
         {
             if (_grid == null) _grid = CreateGrid(_size);
 
-            if (_grid.Any(c => !c.IsCollapsed))
+            if (!_grid.Any(c => !c.IsCollapsed))
             {
                 Debug.Log("Grid is already collapsed");
                 return;
@@ -273,72 +266,73 @@ namespace flexington.WFC
             Cell cell = SelectNextCandidate(_grid);
             cell = Collapse(cell);
             _grid = ReduceNeighbours(_grid, cell.Position);
-            Debug.Log($"Collapsed cell at {cell.Position} with direction {cell.Direction}");
 
             DrawCollapsedCells(_grid, _options);
         }
     }
-}
 
-public class Cell
-{
-    public Vector2Int Position { get; set; }
-    public bool IsCollapsed { get; set; }
-    public Directions Direction { get; set; }
-}
 
-[Flags]
-public enum Directions
-{
-    Blank = 1 << 0,
-    Up = 1 << 1,
-    Down = 1 << 2,
-    Left = 1 << 3,
-    Right = 1 << 4
-}
-
-[Serializable]
-public class TileOption
-{
-    [SerializeField] private TileComponent _tile;
-    public TileComponent Tile
+    public class Cell
     {
-        get { return _tile; }
-        set { _tile = value; }
+        public Vector2Int Position { get; set; }
+        public bool IsCollapsed { get; set; }
+        public List<TileOptionObject> Options { get; set; }
+        public TileOptionObject Option { get; set; }
     }
 
-    [SerializeField] private Directions _direction;
-    public Directions Direction
+    public enum Directions
     {
-        get { return _direction; }
-        set { _direction = value; }
+        Blank = 1 << 0,
+        Up = 1 << 1,
+        Down = 1 << 2,
+        Left = 1 << 3,
+        Right = 1 << 4
     }
 
-    [SerializeField] private Directions _validNeighboursTop;
-    public Directions ValidNeighboursTop
+    [Serializable]
+    public class TileOption
     {
-        get { return _validNeighboursTop; }
-        set { _validNeighboursTop = value; }
+        [SerializeField] private TileComponent _tile;
+        public TileComponent Tile
+        {
+            get { return _tile; }
+            set { _tile = value; }
+        }
+
+        [SerializeField] private Directions _direction;
+        public Directions Direction
+        {
+            get { return _direction; }
+            set { _direction = value; }
+        }
+
+        [SerializeField] private Directions _validNeighboursTop;
+        public Directions ValidNeighboursTop
+        {
+            get { return _validNeighboursTop; }
+            set { _validNeighboursTop = value; }
+        }
+
+        [SerializeField] private Directions _validNeighboursRight;
+        public Directions ValidNeighboursRight
+        {
+            get { return _validNeighboursRight; }
+            set { _validNeighboursRight = value; }
+        }
+
+        [SerializeField] private Directions _validNeighboursBottom;
+        public Directions ValidNeighboursBottom
+        {
+            get { return _validNeighboursBottom; }
+            set { _validNeighboursBottom = value; }
+        }
+
+        [SerializeField] private Directions _validNeighboursLeft;
+        public Directions ValidNeighboursLeft
+        {
+            get { return _validNeighboursLeft; }
+            set { _validNeighboursLeft = value; }
+        }
     }
 
-    [SerializeField] private Directions _validNeighboursRight;
-    public Directions ValidNeighboursRight
-    {
-        get { return _validNeighboursRight; }
-        set { _validNeighboursRight = value; }
-    }
-
-    [SerializeField] private Directions _validNeighboursBottom;
-    public Directions ValidNeighboursBottom
-    {
-        get { return _validNeighboursBottom; }
-        set { _validNeighboursBottom = value; }
-    }
-
-    [SerializeField] private Directions _validNeighboursLeft;
-    public Directions ValidNeighboursLeft
-    {
-        get { return _validNeighboursLeft; }
-        set { _validNeighboursLeft = value; }
-    }
 }

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172c280a66aaa4ba1aae503bb294541f, type: 3}
+  m_Name: DownOption
+  m_EditorClassIdentifier: 
+  _tile: {fileID: 2969943898150090691, guid: bb6251069103443c892256ebd94c3784, type: 3}
+  _direction: 4
+  _connection:
+  - _direction: 2
+    _connection: 1
+  - _direction: 16
+    _connection: 2
+  - _direction: 4
+    _connection: 2
+  - _direction: 8
+    _connection: 2

@@ -154,36 +154,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _size: {x: 10, y: 20}
   _options:
-  - _tile: {fileID: 5709322231799266168, guid: 238fbdeaaf4b4442fb4c70564cf203d9, type: 3}
-    _direction: 1
-    _validNeighboursTop: 3
-    _validNeighboursRight: 17
-    _validNeighboursBottom: 5
-    _validNeighboursLeft: 9
-  - _tile: {fileID: 2386019381208519417, guid: a7dc0c45bb4cf467aab2267c666b1723, type: 3}
-    _direction: 2
-    _validNeighboursTop: 28
-    _validNeighboursRight: 14
-    _validNeighboursBottom: 5
-    _validNeighboursLeft: 22
-  - _tile: {fileID: 2969943898150090691, guid: bb6251069103443c892256ebd94c3784, type: 3}
-    _direction: 4
-    _validNeighboursTop: 3
-    _validNeighboursRight: 14
-    _validNeighboursBottom: 26
-    _validNeighboursLeft: 22
-  - _tile: {fileID: 4845359558113029472, guid: 73d29e70fce1a45bb85c4161e1ba5cd3, type: 3}
-    _direction: 8
-    _validNeighboursTop: 28
-    _validNeighboursRight: 17
-    _validNeighboursBottom: 26
-    _validNeighboursLeft: 22
-  - _tile: {fileID: 2024105341484114396, guid: 0bef15866f4dc4b94b0749166f37787a, type: 3}
-    _direction: 16
-    _validNeighboursTop: 28
-    _validNeighboursRight: 14
-    _validNeighboursBottom: 26
-    _validNeighboursLeft: 9
+  - {fileID: 11400000, guid: 2f6b0835bcd304e6aa2a7c9488a6131e, type: 2}
+  - {fileID: 11400000, guid: 701ace132a5ec42b2bc512b0ddf68224, type: 2}
+  - {fileID: 11400000, guid: fe3db423db71a42f89220f27bcfb29d9, type: 2}
+  - {fileID: 11400000, guid: c6608ee065b024fca883013a20333a3e, type: 2}
+  - {fileID: 11400000, guid: f51d6f584cf464de3a4377200777d6fb, type: 2}
 --- !u!4 &173749115
 Transform:
   m_ObjectHideFlags: 0
