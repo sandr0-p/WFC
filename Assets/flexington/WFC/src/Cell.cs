@@ -22,11 +22,12 @@ namespace flexington.WFC
         /// <summary>
         /// Holds the direction and valid connections for each side of the tile.
         /// </summary>
-        public List<TileOptionObject> Options { get; set; }
+        public List<Tile> Tiles { get; set; }
 
         /// <summary>
         /// The selected option after the cell has been collapsed.
         /// </summary>
-        public TileOptionObject Option { get; set; }
+        public Tile Tile { get; set; }
+
     }
 }

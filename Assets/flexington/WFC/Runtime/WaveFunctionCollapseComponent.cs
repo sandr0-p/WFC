@@ -8,13 +8,13 @@ namespace flexington.WFC
         [Header("Grid")]
         [SerializeField] private Vector2Int _size;
 
-        [SerializeField] private List<TileOptionObject> _options;
+        [SerializeField] private List<SpriteRenderer> _tiles;
 
         private WaveFunctionCollapse _wfc;
 
         public void Start()
         {
-            _wfc = new WaveFunctionCollapse(_size, _options);
+            _wfc = new WaveFunctionCollapse(_size, _tiles);
             _wfc.Simulate();
             DrawCollapsedCells(_wfc.Grid);
         }
@@ -49,7 +49,7 @@ namespace flexington.WFC
                     var cell = grid[x + y * _size.x];
                     if (cell.IsCollapsed)
                     {
-                        var tile = cell.Option.Tile;
+                        var tile = cell.Tile.GameObject;
                         var tileObject = Instantiate(tile, new Vector3(x, y, 0), Quaternion.identity);
                         tileObject.transform.parent = transform;
                     }
@@ -62,7 +62,7 @@ namespace flexington.WFC
         /// </summary>
         public void Editor_Step()
         {
-            if (_wfc == null) _wfc = new WaveFunctionCollapse(_size, _options);
+            if (_wfc == null) _wfc = new WaveFunctionCollapse(_size, _tiles);
 
             _wfc.Step();
             DeleteChildren();

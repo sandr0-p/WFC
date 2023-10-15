@@ -153,12 +153,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _size: {x: 10, y: 20}
-  _options:
-  - {fileID: 11400000, guid: 2f6b0835bcd304e6aa2a7c9488a6131e, type: 2}
-  - {fileID: 11400000, guid: 701ace132a5ec42b2bc512b0ddf68224, type: 2}
-  - {fileID: 11400000, guid: fe3db423db71a42f89220f27bcfb29d9, type: 2}
-  - {fileID: 11400000, guid: c6608ee065b024fca883013a20333a3e, type: 2}
-  - {fileID: 11400000, guid: f51d6f584cf464de3a4377200777d6fb, type: 2}
+  _tiles:
+  - {fileID: 57285456882961096, guid: 5ace3b7c455724d3b99e8961eb5a8328, type: 3}
+  - {fileID: 5197744672857206069, guid: 0800553fc5b3f4ed3a349ff6958f0438, type: 3}
+  - {fileID: 5097512379894427110, guid: bb6251069103443c892256ebd94c3784, type: 3}
+  - {fileID: 2763033584456473916, guid: 58755846ad30e4055aa8e6045ea283a4, type: 3}
+  - {fileID: 5578789646904658061, guid: da1e206512b3c4f92981973574cf21c8, type: 3}
+  - {fileID: 4205310105467257345, guid: 0bef15866f4dc4b94b0749166f37787a, type: 3}
+  - {fileID: 1797292389493333464, guid: 1a052ae6344a24714854add3f8e73e75, type: 3}
+  - {fileID: 843055313121289497, guid: 73d29e70fce1a45bb85c4161e1ba5cd3, type: 3}
+  - {fileID: 1724557820113934479, guid: 1c2b9d58096ad409bb2c297901a620b1, type: 3}
+  - {fileID: 2357115063489437578, guid: a7dc0c45bb4cf467aab2267c666b1723, type: 3}
+  - {fileID: 4416184708364839284, guid: ef2fa3effb7cd4542b6e0bd17ab4fd01, type: 3}
+  - {fileID: 8741706401239098069, guid: 238fbdeaaf4b4442fb4c70564cf203d9, type: 3}
 --- !u!4 &173749115
 Transform:
   m_ObjectHideFlags: 0

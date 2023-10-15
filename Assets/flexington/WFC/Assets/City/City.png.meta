@@ -21,7 +21,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -136,14 +136,14 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: City_0
+      name: ES
       rect:
         serializedVersion: 2
         x: 0
         y: 96
         width: 24
         height: 24
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -157,14 +157,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: City_1
+      name: EW
       rect:
         serializedVersion: 2
         x: 24
         y: 96
         width: 24
         height: 24
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -178,14 +178,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: City_2
+      name: ESW
       rect:
         serializedVersion: 2
         x: 48
         y: 96
         width: 24
         height: 24
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -199,35 +199,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: City_3
-      rect:
-        serializedVersion: 2
-        x: 72
-        y: 96
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 656d4008cc43e41f481a3b39eb465fc3
-      internalID: 1936427432
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: City_4
+      name: SW
       rect:
         serializedVersion: 2
         x: 96
         y: 96
         width: 24
         height: 24
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -241,14 +220,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: City_5
+      name: NS
       rect:
         serializedVersion: 2
         x: 0
         y: 72
         width: 24
         height: 24
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -262,14 +241,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: City_6
+      name: Blank
       rect:
         serializedVersion: 2
         x: 24
         y: 72
         width: 24
         height: 24
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -283,77 +262,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: City_7
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 72
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7c7c2da5627ad4eebb9d906f2622c3c3
-      internalID: -807060136
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: City_8
-      rect:
-        serializedVersion: 2
-        x: 72
-        y: 72
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8708ae8d7d387479bbd11f48055ffe9b
-      internalID: -417830648
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: City_9
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 72
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1225c1c5c128144b4932132a61e9eb82
-      internalID: 804693443
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: City_10
+      name: NES
       rect:
         serializedVersion: 2
         x: 0
         y: 48
         width: 24
         height: 24
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -367,35 +283,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: City_11
-      rect:
-        serializedVersion: 2
-        x: 24
-        y: 48
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eeb09d68e26d7448a80ab67c84ad7d41
-      internalID: 2035439970
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: City_12
+      name: NESW
       rect:
         serializedVersion: 2
         x: 48
         y: 48
         width: 24
         height: 24
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -409,35 +304,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: City_13
-      rect:
-        serializedVersion: 2
-        x: 72
-        y: 48
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 532a323d3863b4fa3bc27f6d0d7d1604
-      internalID: 529798965
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: City_14
+      name: NSW
       rect:
         serializedVersion: 2
         x: 96
         y: 48
         width: 24
         height: 24
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -451,119 +325,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: City_15
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 24
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 39fa2a14929e04b2daafc4693856bce0
-      internalID: -899195668
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: City_16
-      rect:
-        serializedVersion: 2
-        x: 24
-        y: 24
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6c7740666ccb345b09aa946bbbf3d8d2
-      internalID: -1929973533
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: City_17
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 24
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: efbcca00b0d5944679935e981c7d7957
-      internalID: 1342370887
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: City_18
-      rect:
-        serializedVersion: 2
-        x: 72
-        y: 24
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ca3ebc61b44ea446f98150b2a3dc8e3f
-      internalID: -122888002
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: City_19
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 24
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b8961df757b624937b1d75c03ddd46e3
-      internalID: -788998382
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: City_20
+      name: NE
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 24
         height: 24
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -577,35 +346,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: City_21
-      rect:
-        serializedVersion: 2
-        x: 24
-        y: 0
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f7c5c9bf52f5f4339a61e84f09a7b0c0
-      internalID: -1757615589
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: City_22
+      name: NEW
       rect:
         serializedVersion: 2
         x: 48
         y: 0
         width: 24
         height: 24
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -619,35 +367,14 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: City_23
-      rect:
-        serializedVersion: 2
-        x: 72
-        y: 0
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5d878048c5bae4796b43c4d08e5db113
-      internalID: -465659269
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: City_24
+      name: NW
       rect:
         serializedVersion: 2
         x: 96
         y: 0
         width: 24
         height: 24
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
@@ -671,31 +398,31 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      City_0: 1085311344
-      City_1: 1568006942
-      City_10: 1182536236
+      Blank: -323697555
       City_11: 2035439970
-      City_12: 203905659
       City_13: 529798965
-      City_14: 668451638
       City_15: -899195668
       City_16: -1929973533
       City_17: 1342370887
       City_18: -122888002
       City_19: -788998382
-      City_2: 1581226065
-      City_20: -1724980527
       City_21: -1757615589
-      City_22: -410262156
       City_23: -465659269
-      City_24: -989749167
       City_3: 1936427432
-      City_4: -1164493623
-      City_5: -1242525943
-      City_6: -323697555
       City_7: -807060136
       City_8: -417830648
       City_9: 804693443
+      ES: 1085311344
+      ESW: 1581226065
+      EW: 1568006942
+      NE: -1724980527
+      NES: 1182536236
+      NESW: 203905659
+      NEW: -410262156
+      NS: -1242525943
+      NSW: 668451638
+      NW: -989749167
+      SW: -1164493623
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

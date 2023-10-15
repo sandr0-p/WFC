@@ -7,29 +7,54 @@ namespace flexington.WFC
 {
     public class WaveFunctionCollapse
     {
-        private Cell[] _grid;
+        /// <summary>
+        /// The grid of cells.
+        /// </summary>
         public Cell[] Grid => _grid;
+        private Cell[] _grid;
+
         private Vector2Int _size;
-        private List<TileOptionObject> _options;
+        private List<SpriteRenderer> _options;
 
-        public WaveFunctionCollapse(Vector2Int size, List<TileOptionObject> options)
+        public WaveFunctionCollapse(Vector2Int size, List<SpriteRenderer> options)
         {
-            _options = options;
-            _size = size;
+            this._size = size;
+            this._options = options;
 
-            // Initialize grid as one-dimensional array
-            _grid = new Cell[size.x * size.y];
+            _grid = CreateGrid(size, options);
+        }
 
-            // Initialize each cell
-            for (int i = 0; i < _grid.Length; i++)
+        /// <summary>
+        /// Creates and initializes a new grid.
+        /// </summary>
+        /// <param name="size">The size of the grid.</param>
+        /// <param name="options">The available options.</param>
+        /// <returns>The created grid.</returns>
+        private Cell[] CreateGrid(Vector2Int size, List<SpriteRenderer> options)
+        {
+            var grid = new Cell[size.x * size.y];
+
+            var tiles = new List<Tile>();
+            foreach (var option in options)
             {
-                _grid[i] = new Cell()
-                {
-                    Position = new Vector2Int(i % size.x, i / size.x),
-                    IsCollapsed = false,
-                    Options = new List<TileOptionObject>(_options)
-                };
+                var tile = new Tile(option);
+                tiles.Add(tile);
             }
+
+            for (int x = 0; x < size.x; x++)
+            {
+                for (int y = 0; y < size.y; y++)
+                {
+                    grid[Index(x, y)] = new Cell
+                    {
+                        Position = new Vector2Int(x, y),
+                        IsCollapsed = false,
+                        Tiles = new List<Tile>(tiles)
+                    };
+                }
+            }
+
+            return grid;
         }
 
         public void Simulate()
@@ -60,13 +85,13 @@ namespace flexington.WFC
         {
             // Get all cells that are not collapsed
             grid = grid.Where(c => !c.IsCollapsed)
-                .OrderBy(c => c.Options.Count).ToArray();
+                .OrderBy(c => c.Tiles.Count).ToArray();
 
             // Get first cell
             var cell = grid.First();
 
             // Get all cells with the  same amount of options
-            var sameOptions = grid.Where(c => c.Options.Count == cell.Options.Count).ToArray();
+            var sameOptions = grid.Where(c => c.Tiles.Count == cell.Tiles.Count).ToArray();
 
             // Get random cell from same options
             cell = sameOptions[UnityEngine.Random.Range(0, sameOptions.Length)];
@@ -85,19 +110,19 @@ namespace flexington.WFC
             if (cell.IsCollapsed) return cell;
 
             // If cell has only one direction remaining, collapse it
-            if (cell.Options.Count == 1)
+            if (cell.Tiles.Count == 1)
             {
-                cell.Option = cell.Options[0];
-                cell.Options = null;
+                cell.Tile = cell.Tiles[0];
+                cell.Tiles = null;
                 cell.IsCollapsed = true;
                 return cell;
             }
 
             // Select randomly from remaining options
-            cell.Option = cell.Options[UnityEngine.Random.Range(0, cell.Options.Count)];
+            cell.Tile = cell.Tiles[UnityEngine.Random.Range(0, cell.Tiles.Count)];
 
             // Set options null
-            cell.Options = null;
+            cell.Tiles = null;
 
             // Collapse cell
             cell.IsCollapsed = true;
@@ -113,7 +138,7 @@ namespace flexington.WFC
         private Cell[] ReduceNeighbours(Cell[] grid, Vector2Int cellPosition)
         {
             // Get cell
-            var cell = grid[cellPosition.x + cellPosition.y * _size.x];
+            var cell = grid[Index(cellPosition.x, cellPosition.y)];
 
             ReduceOptions(grid, cell, Vector2Int.up);
             ReduceOptions(grid, cell, Vector2Int.right);
@@ -136,7 +161,7 @@ namespace flexington.WFC
             if (position.x < 0 || position.x >= _size.x || position.y < 0 || position.y >= _size.y) return grid;
 
             // Get neighbour
-            var neighbour = grid[position.x + position.y * _size.x];
+            var neighbour = grid[Index(position.x, position.y)];
 
             // Check if neighbour is already collapsed
             if (neighbour.IsCollapsed) return grid;
@@ -145,19 +170,24 @@ namespace flexington.WFC
             var direction = offset.x == 0 ? (offset.y == 1 ? Direction.Up : Direction.Down) : (offset.x == 1 ? Direction.Right : Direction.Left);
 
             // Remove all options of the neighbour where the given direction has not the same connection type
-            var connection = cell.Option.Connection.Single(c => c.Directions == direction);
+            var connection = cell.Tile.Sockets.Single(c => c.Direction == direction);
 
             // Get opposite direction
             var oppositeDirection = offset.x == 0 ? (offset.y == 1 ? Direction.Down : Direction.Up) : (offset.x == 1 ? Direction.Left : Direction.Right);
 
-            for (int i = neighbour.Options.Count - 1; i >= 0; i--)
+            for (int i = neighbour.Tiles.Count - 1; i >= 0; i--)
             {
-                var option = neighbour.Options[i];
-                var connections = option.Connection.Any(c => c.Directions == oppositeDirection && c.ConnectionType == connection.ConnectionType);
-                if (!connections) neighbour.Options.RemoveAt(i);
+                var option = neighbour.Tiles[i];
+                var connections = option.Sockets.Any(c => c.Direction == oppositeDirection && c.Hash == connection.Hash);
+                if (!connections) neighbour.Tiles.RemoveAt(i);
             }
 
             return grid;
+        }
+
+        private int Index(int x, int y)
+        {
+            return x + y * _size.x;
         }
     }
 }
