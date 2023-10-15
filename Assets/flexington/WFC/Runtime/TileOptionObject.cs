@@ -14,8 +14,8 @@ namespace flexington.WFC
             set { _tile = value; }
         }
 
-        [SerializeField] private Directions _direction;
-        public Directions Direction
+        [SerializeField] private Direction _direction;
+        public Direction Direction
         {
             get { return _direction; }
             set { _direction = value; }
@@ -33,8 +33,8 @@ namespace flexington.WFC
     [Serializable]
     public class Connection
     {
-        [SerializeField] private Directions _direction;
-        public Directions Directions
+        [SerializeField] private Direction _direction;
+        public Direction Directions
         {
             get { return _direction; }
             set { _direction = value; }
